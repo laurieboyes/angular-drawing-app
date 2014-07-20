@@ -37,14 +37,17 @@ angular.module('myApp.services', [])
         return{
             clear: function () {
 
-                var toRemove = [];
+                //save the background and all of its events
+                var backgroundElement = this.paper.getById(this.backgroundElementId);
+                var toRemove = this.paper.set();
 
-                this.paper.forEach(function (el) {
-                    if(el.id !== this.backgroundElementId){
+                this.paper.forEach(function(el) {
+                    if (el !== backgroundElement) {
                         toRemove.push(el);
                     }
-                }.bind(this));
-
+                });
+                
+                toRemove.remove();                                                              
             },
 
             //set in the canvas directive
