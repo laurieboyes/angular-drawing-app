@@ -1,5 +1,5 @@
 body {
-    background: #999 ;
+    background: #999;
     text-align: center;
 }
 
@@ -8,4 +8,12 @@ body {
     margin: auto;
     text-align: left;
 }
+
+.show-if-tool-is-pen {
+    display: none;
+}
+.show-if-tool-is-pen.pen {
+    display: inline;
+}
+
 
