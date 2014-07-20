@@ -19,17 +19,19 @@ angular.module('myApp.directives', [])
                     .attr("fill", "#FFF")
                     .attr("stroke", "#000");
 
-
-                //example lines (temp)
-                paper.path("M10,20L30,40");
-
-
                 var pathStringInProgress = "";
                 var pathInProgress;
 
                 //events
                 background.drag(
                     function onMove (dx, dy, x, y, e) {
+
+                        //bit of a nasty hack to ensure we're on the canvas
+                        if ($(elements).find(e.target).length <= 0){
+//                          pathStringInProgress = "";
+                            return;
+                        }
+
                         // continue path
                         if(pathStringInProgress.length){
                             pathStringInProgress += "L" + e.offsetX + "," + e.offsetY;
