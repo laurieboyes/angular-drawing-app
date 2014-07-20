@@ -16,11 +16,18 @@ angular.module('myApp.controllers', [])
         });
     }])
 
-    .controller('ToolsController', ['toolSelection', '$scope', function (toolSelection, $scope) {
+    .controller('ToolsController', ['toolSelection', 'drawing', '$scope', function (toolSelection, drawing, $scope) {
         $scope.tools = toolSelection.tools;
 
         $scope.setSelectedTool = function() {
             toolSelection.selectedTool = $scope.selectedTool;
+            
+//            Not sure this belongs here
+            if($scope.selectedTool.id === "pen") {
+                drawing.enablePathDrawing();
+            } else {
+                drawing.disablePathDrawing();
+            }
         };
 
         $scope.$watch( function () { return toolSelection.selectedTool; }, function ( selectedTool ) {           

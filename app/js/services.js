@@ -59,6 +59,14 @@ angular.module('myApp.services', [])
                 toRemove.remove();
             },
 
+            enablePathDrawing: function () {
+                this.paper.getById(this.drawingSurfaceElementId).toFront();
+            },
+            
+            disablePathDrawing: function () {
+                this.paper.getById(this.drawingSurfaceElementId).toBack();
+            },
+
             //set in the canvas directive
             paper: undefined,
             backgroundElementId: undefined,
@@ -73,6 +81,12 @@ angular.module('myApp.services', [])
             },
 
             addEraseEvent: function (raphaelEl) {
+                raphaelEl.click(function (e) {
+                    if (toolSelection.selectedTool.id === "eraser") {
+                        raphaelEl.remove();
+                    }
+
+                });
                 raphaelEl.mouseover(function (e) {
                     var isLeftButtonPressed = e.which === 1;
                     if (isLeftButtonPressed && toolSelection.selectedTool.id === "eraser") {
