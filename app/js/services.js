@@ -16,6 +16,15 @@ angular.module('myApp.services', [])
 
                 this.pathInProgress.attr ("stroke", toolSelection.selectedColour.colourValue);
 
+//                todo find somewhere more sensible to define this
+                this.pathInProgress.mouseover(function(e){
+                    var isLeftButtonPressed = e.which === 1;                    
+                    if(isLeftButtonPressed && toolSelection.selectedTool.id === "eraser"){
+                        this.remove();
+                    }
+                    
+                }.bind(this.pathInProgress));
+
             }.bind(this),
 
             continuePath: function (x, y) {
@@ -64,8 +73,8 @@ angular.module('myApp.services', [])
                 {name: "Blue", colourValue: "#00F"}
             ],
             tools:[
-                {name: "Pen"},
-                {name: "Line Eraser"}
+                {name: "Pen", id:"pen"},
+                {name: "Line Eraser", id:"eraser"}
             ]
         };
 

@@ -4,7 +4,7 @@
 
 angular.module('myApp.directives', [])
 
-    .directive('canvas', ['drawing','pathDrawing', function (drawing, pathDrawing) {
+    .directive('canvas', ['drawing','pathDrawing','toolSelection', function (drawing, pathDrawing, toolSelection) {
         return {
             restrict: 'A',
             link: function (scope, elements, attrs) {
@@ -30,15 +30,29 @@ angular.module('myApp.directives', [])
                         if ($(elements).find(e.target).length > 0) {
                             pathDrawing.continuePath(e.offsetX, e.offsetY);
                         } else {
-                            pathDrawing.endPath();
+
+                            switch(toolSelection.selectedTool.id) {
+                                case "pen":
+                                    pathDrawing.endPath();
+                                    break;
+                            }
+                            
                         }
                     }
                     ,
-                    function onStart(x, y, e) {
-                        pathDrawing.startPath(e.offsetX, e.offsetY);
+                    function onStart(x, y, e) {                                                
+                        switch(toolSelection.selectedTool.id) {
+                            case "pen":
+                                pathDrawing.startPath(e.offsetX, e.offsetY);
+                                break;
+                        }
                     },
                     function onEnd() {
-                        pathDrawing.endPath();
+                        switch(toolSelection.selectedTool.id) {
+                            case "pen":
+                                pathDrawing.endPath();
+                                break;
+                        }
                     }
                 );
 

@@ -16,14 +16,14 @@ angular.module('myApp.controllers', [])
         });
     }])
 
-    .controller('ToolsController', ['toolSelection', 'drawing', '$scope', function (toolSelection, drawing, $scope) {
+    .controller('ToolsController', ['toolSelection', '$scope', function (toolSelection, $scope) {
         $scope.tools = toolSelection.tools;
 
         $scope.setSelectedTool = function() {
             toolSelection.selectedTool = $scope.selectedTool;
         };
 
-        $scope.$watch( function () { return toolSelection.selectedTool; }, function ( selectedTool ) {
+        $scope.$watch( function () { return toolSelection.selectedTool; }, function ( selectedTool ) {           
             $scope.selectedTool = selectedTool;
         });
     }])
