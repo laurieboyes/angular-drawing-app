@@ -28,25 +28,26 @@ angular.module('myApp.directives', [])
                 var pathInProgress;
 
                 //events
-                background
-                    .mousedown(function (e) {
-                        // start path
-                        pathStringInProgress = "M" + e.offsetX + "," + e.offsetY;
-                        pathInProgress = paper.path(pathStringInProgress);
-                    })
-                    .mousemove(function (e) {                        
+                background.drag(
+                    function onMove (dx, dy, x, y, e) {
                         // continue path
                         if(pathStringInProgress.length){
                             pathStringInProgress += "L" + e.offsetX + "," + e.offsetY;
                             pathInProgress.remove();
                             pathInProgress = paper.path(pathStringInProgress);
                         }
-                    })
-                    .mouseup(function (e) {
+                    }
+                    ,
+                    function onStart(x, y, e) {
+                        // start path
+                        pathStringInProgress = "M" + e.offsetX + "," + e.offsetY;
+                        pathInProgress = paper.path(pathStringInProgress);
+                    },
+                    function onEnd() {
                         // end path
-                        console.log('up!');
                         pathStringInProgress = "";
-                    });
+                    }
+                );
 
             }
         }
