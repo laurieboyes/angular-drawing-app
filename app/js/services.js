@@ -14,8 +14,14 @@ angular.module('myApp.services', [])
                 this.pathStringInProgress = "M" + x + "," + y;
                 this.pathInProgress = drawing.paper.path(this.pathStringInProgress);
 
-                this.pathInProgress.attr("stroke", toolSelection.selectedColour.colourValue);
-
+                this.pathInProgress.attr(
+                    {
+                        "stroke": toolSelection.selectedColour.colourValue,
+                        "stroke-width": toolSelection.selectedSize.sizeValue
+                    }
+                );
+                
+                
                 shapeEvents.addEvents(this.pathInProgress);
 
             }.bind(this),
@@ -90,9 +96,10 @@ angular.module('myApp.services', [])
                 {name: "Line Eraser", id: "eraser"}
             ],
             sizes: [
-                {name: "Small", sizeValue: 1},
-                {name: "Medium", sizeValue: 3},
-                {name: "Large", sizeValue: 8}
+                {name: "Small", sizeValue: 3},
+                {name: "Medium", sizeValue: 8},
+                {name: "Large", sizeValue: 16},
+                {name: "Giant", sizeValue: 32}
             ]
         };
 
