@@ -4,7 +4,7 @@
 
 angular.module('myApp.services', [])
 
-    .service('pathDrawing', ['drawing', 'toolSelection', function (drawing, toolSelection) {
+    .service('pathDrawing', ['drawing', 'toolSelection', 'shapeEvents', function (drawing, toolSelection, shapeEvents) {
         return{
 
             pathStringInProgress: "",
@@ -16,15 +16,8 @@ angular.module('myApp.services', [])
 
                 this.pathInProgress.attr ("stroke", toolSelection.selectedColour.colourValue);
 
-//                todo find somewhere more sensible to define this
-                this.pathInProgress.mouseover(function(e){
-                    var isLeftButtonPressed = e.which === 1;                    
-                    if(isLeftButtonPressed && toolSelection.selectedTool.id === "eraser"){
-                        this.remove();
-                    }
-                    
-                }.bind(this.pathInProgress));
-
+                shapeEvents.addEvents(this.pathInProgress);
+                                
             }.bind(this),
 
             continuePath: function (x, y) {
@@ -65,6 +58,23 @@ angular.module('myApp.services', [])
         }
     }])
 
+    .service('shapeEvents', ['toolSelection', function (toolSelection) {
+        return{
+            addEvents: function (raphaelEl) {
+                  this.addEraseEvent(raphaelEl);
+            },
+            
+            addEraseEvent: function(raphaelEl) {
+                raphaelEl.mouseover(function(e){
+                    var isLeftButtonPressed = e.which === 1;
+                    if(isLeftButtonPressed && toolSelection.selectedTool.id === "eraser"){
+                        raphaelEl.remove();
+                    }
+
+                });
+            }
+        }
+    }])
 
     .factory('toolSelection', function() {
         var defaults = {

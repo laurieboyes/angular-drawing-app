@@ -22,21 +22,18 @@ angular.module('myApp.directives', [])
 
                 drawing.backgroundElementId = background.id;
 
-                //events
+                //path drawing events
                 background.drag(
                     function onMove(dx, dy, x, y, e) {
-
-                        //bit of a nasty hack to ensure we're still on the canvas
-                        if ($(elements).find(e.target).length > 0) {
-                            pathDrawing.continuePath(e.offsetX, e.offsetY);
-                        } else {
-
-                            switch(toolSelection.selectedTool.id) {
-                                case "pen":
-                                    pathDrawing.endPath();
-                                    break;
-                            }
-                            
+                        switch (toolSelection.selectedTool.id) {
+                            case "pen":
+                                //bit of a nasty hack to ensure we're still on the canvas
+                                if ($(elements).find(e.target).length > 0) {
+                                    pathDrawing.continuePath(e.offsetX, e.offsetY);
+                                } else {
+                                    pathDrawing.endPath();                                    
+                                }
+                                break;
                         }
                     }
                     ,
