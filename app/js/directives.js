@@ -4,7 +4,7 @@
 
 angular.module('myApp.directives', [])
 
-    .directive('canvas', [function () {
+    .directive('canvas', ['drawing', function (drawing) {
         return {
             restrict: 'A',
             link: function (scope, elements, attrs) {
@@ -19,35 +19,23 @@ angular.module('myApp.directives', [])
                     .attr("fill", "#FFF")
                     .attr("stroke", "#000");
 
-                var pathStringInProgress = "";
-                var pathInProgress;
-
                 //events
                 background.drag(
-                    function onMove (dx, dy, x, y, e) {
+                    function onMove(dx, dy, x, y, e) {
 
                         //bit of a nasty hack to ensure we're on the canvas
-                        if ($(elements).find(e.target).length <= 0){
-//                          pathStringInProgress = "";
-                            return;
-                        }
-
-                        // continue path
-                        if(pathStringInProgress.length){
-                            pathStringInProgress += "L" + e.offsetX + "," + e.offsetY;
-                            pathInProgress.remove();
-                            pathInProgress = paper.path(pathStringInProgress);
+                        if ($(elements).find(e.target).length > 0) {
+                            drawing.continuePath(paper, e.offsetX, e.offsetY);
+                        } else {
+                            drawing.endPath();
                         }
                     }
                     ,
                     function onStart(x, y, e) {
-                        // start path
-                        pathStringInProgress = "M" + e.offsetX + "," + e.offsetY;
-                        pathInProgress = paper.path(pathStringInProgress);
+                        drawing.startPath(paper, e.offsetX, e.offsetY);
                     },
                     function onEnd() {
-                        // end path
-                        pathStringInProgress = "";
+                        drawing.endPath();
                     }
                 );
 
