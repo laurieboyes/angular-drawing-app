@@ -14,14 +14,14 @@ angular.module('myApp.services', [])
                 this.pathStringInProgress = "M" + x + "," + y;
                 this.pathInProgress = drawing.paper.path(this.pathStringInProgress);
 
-                this.pathInProgress.attr ("stroke", toolSelection.selectedColour.colourValue);
+                this.pathInProgress.attr("stroke", toolSelection.selectedColour.colourValue);
 
                 shapeEvents.addEvents(this.pathInProgress);
-                                
+
             }.bind(this),
 
             continuePath: function (x, y) {
-                if(this.pathStringInProgress.length){
+                if (this.pathStringInProgress.length) {
                     this.pathStringInProgress += "L" + x + "," + y;
                     this.pathInProgress.attr("path", this.pathStringInProgress);
 
@@ -43,13 +43,13 @@ angular.module('myApp.services', [])
                 var backgroundElement = this.paper.getById(this.backgroundElementId);
                 var toRemove = this.paper.set();
 
-                this.paper.forEach(function(el) {
+                this.paper.forEach(function (el) {
                     if (el !== backgroundElement) {
                         toRemove.push(el);
                     }
                 });
-                
-                toRemove.remove();                                                              
+
+                toRemove.remove();
             },
 
             //set in the canvas directive
@@ -61,13 +61,13 @@ angular.module('myApp.services', [])
     .service('shapeEvents', ['toolSelection', function (toolSelection) {
         return{
             addEvents: function (raphaelEl) {
-                  this.addEraseEvent(raphaelEl);
+                this.addEraseEvent(raphaelEl);
             },
-            
-            addEraseEvent: function(raphaelEl) {
-                raphaelEl.mouseover(function(e){
+
+            addEraseEvent: function (raphaelEl) {
+                raphaelEl.mouseover(function (e) {
                     var isLeftButtonPressed = e.which === 1;
-                    if(isLeftButtonPressed && toolSelection.selectedTool.id === "eraser"){
+                    if (isLeftButtonPressed && toolSelection.selectedTool.id === "eraser") {
                         raphaelEl.remove();
                     }
 
@@ -76,15 +76,17 @@ angular.module('myApp.services', [])
         }
     }])
 
-    .factory('toolSelection', function() {
+    .factory('toolSelection', function () {
         var defaults = {
-            colours:[
+            colours: [
                 {name: "Black", colourValue: "#000"},
+                {name: "Red", colourValue: "#F00"},
+                {name: "Green", colourValue: "#0F0"},
                 {name: "Blue", colourValue: "#00F"}
             ],
-            tools:[
-                {name: "Pen", id:"pen"},
-                {name: "Line Eraser", id:"eraser"}
+            tools: [
+                {name: "Pen", id: "pen"},
+                {name: "Line Eraser", id: "eraser"}
             ]
         };
 
