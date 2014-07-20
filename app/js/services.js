@@ -62,10 +62,15 @@ angular.module('myApp.services', [])
             colours:[
                 {name: "Black", colourValue: "#000"},
                 {name: "Blue", colourValue: "#00F"}
+            ],
+            tools:[
+                {name: "Pen"},
+                {name: "Line Eraser"}
             ]
         };
 
         defaults.selectedColour = defaults.colours[0];
+        defaults.selectedTool = defaults.tools[0];
 
         return defaults;
 

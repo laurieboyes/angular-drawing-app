@@ -23,9 +23,10 @@
 
   <div class="canvas" canvas canvas-width="600" canvas-height="400"></div>
 
-  <div class="tools" ng-controller="ToolsController">
-      <select ng-model="selectedColour" ng-options="colour.name for colour in colours" ng-change="setSelectedColour()"></select>
-      <input type="button" ng-click="clear()" value="Clear screen"/>
+  <div class="tools">
+      <select ng-controller="ColourController" ng-model="selectedColour" ng-options="colour.name for colour in colours" ng-change="setSelectedColour()"></select>
+      <select ng-controller="ToolsController" ng-model="selectedTool" ng-options="tool.name for tool in tools" ng-change="setSelectedTool()"></select>
+      <input ng-controller="ClearController" type="button" ng-click="clear()" value="Clear screen"/>
   </div>
 
   <!-- In production use:
