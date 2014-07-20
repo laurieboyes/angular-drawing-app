@@ -3,13 +3,15 @@
 /* Controllers */
 
 angular.module('myApp.controllers', [])
-    .controller('ToolsController', ['$scope', function ($scope) {
+    .controller('ToolsController', ['tools', '$scope', function (tools, $scope) {
+        $scope.colours = tools.colours;
 
-        $scope.colours = [
-            {name: "Black", value: "#000"},
-            {name: "Blue", value: "#00F"}
-        ];
+        $scope.setSelectedColour = function() {
+            tools.selectedColour = $scope.selectedColour;
+        };
 
-        $scope.selectedColour = $scope.colours[0];
+        $scope.$watch( function () { return tools.selectedColour; }, function ( selectedColour ) {
+            $scope.selectedColour = selectedColour;
+        });
 
     }]);

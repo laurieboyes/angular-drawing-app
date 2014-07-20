@@ -27,6 +27,17 @@ angular.module('myApp.services', [])
                 this.pathInProgress = undefined;
             }.bind(this)
         }
-    });
+    })
+    .factory('tools', function() {
+        var defaults = {
+            colours:[
+                {name: "Black", value: "#000"},
+                {name: "Blue", value: "#00F"}
+            ]
+        };
 
-;
+        defaults.selectedColour = defaults.colours[0];
+
+        return defaults;
+
+    });

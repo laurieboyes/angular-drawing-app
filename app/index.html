@@ -24,7 +24,7 @@
   <div class="canvas" canvas canvas-width="600" canvas-height="400"></div>
 
   <div class="tools" ng-controller="ToolsController">
-      <select ng-model="selectedColour" ng-options="colour.name for colour in colours"></select>
+      <select ng-model="selectedColour" ng-options="colour.name for colour in colours" ng-change="setSelectedColour()"></select>
   </div>
 
   <!-- In production use:
