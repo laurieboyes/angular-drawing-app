@@ -26,6 +26,7 @@
   <div class="tools">
       <select ng-controller="ColourController" ng-model="selectedColour" ng-options="colour.name for colour in colours" ng-change="setSelectedColour()"></select>
       <select ng-controller="ToolsController" ng-model="selectedTool" ng-options="tool.name for tool in tools" ng-change="setSelectedTool()"></select>
+      <select ng-controller="SizeController" ng-model="selectedSize" ng-options="size.name for size in sizes" ng-change="setSelectedSize()"></select>
       <input ng-controller="ClearController" type="button" ng-click="clear()" value="Clear screen"/>
   </div>
 

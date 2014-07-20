@@ -27,6 +27,18 @@ angular.module('myApp.controllers', [])
             $scope.selectedTool = selectedTool;
         });
     }])
+
+    .controller('SizeController', ['toolSelection', '$scope', function (toolSelection, $scope) {
+        $scope.sizes = toolSelection.sizes;
+
+        $scope.setSelectedSize = function() {
+            toolSelection.selectedSize = $scope.selectedSize;
+        };
+
+        $scope.$watch( function () { return toolSelection.selectedSize; }, function ( selectedSize ) {
+            $scope.selectedSize = selectedSize;
+        });
+    }])
     
     .controller('ClearController', ['drawing', '$scope', function (drawing, $scope) {
         

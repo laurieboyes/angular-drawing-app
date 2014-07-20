@@ -76,6 +76,7 @@ angular.module('myApp.services', [])
         }
     }])
 
+//    Todo rename me
     .factory('toolSelection', function () {
         var defaults = {
             colours: [
@@ -87,11 +88,17 @@ angular.module('myApp.services', [])
             tools: [
                 {name: "Pen", id: "pen"},
                 {name: "Line Eraser", id: "eraser"}
+            ],
+            sizes: [
+                {name: "Small", sizeValue: 1},
+                {name: "Medium", sizeValue: 3},
+                {name: "Large", sizeValue: 8}
             ]
         };
 
         defaults.selectedColour = defaults.colours[0];
         defaults.selectedTool = defaults.tools[0];
+        defaults.selectedSize = defaults.sizes[1];
 
         return defaults;
 
