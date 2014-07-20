@@ -10,11 +10,14 @@ angular.module('myApp.services', [])
                     .rect(0, 0, w, h)
                     .attr("fill", "#FFF")
                     .attr("stroke", "#000")
-                    .click(this.canvasClick);
+
+                    .mousedown(function(e) {
+                        this.canvasMouseDown(e.offsetX, e.offsetY);
+                    }.bind(this));
             },
 
-            canvasClick : function(e) {
-                alert('super clicked!')
+            canvasMouseDown : function(x, y) {
+                alert('Clicked here: x=' + x + ' y=' + y);
             }
 
         };
