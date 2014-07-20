@@ -4,6 +4,9 @@
 
 angular.module('myApp.controllers', [])
     .controller('ToolsController', ['tools', '$scope', function (tools, $scope) {
+
+//        Colour
+
         $scope.colours = tools.colours;
 
         $scope.setSelectedColour = function() {

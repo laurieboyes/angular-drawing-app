@@ -3,7 +3,8 @@
 /* Services */
 
 angular.module('myApp.services', [])
-    .service('drawing', function () {
+
+    .service('drawing', ['tools', function (tools) {
         return{
 
             pathStringInProgress: "",
@@ -12,13 +13,16 @@ angular.module('myApp.services', [])
             startPath: function (paper, x, y) {
                 this.pathStringInProgress = "M" + x + "," + y;
                 this.pathInProgress = paper.path(this.pathStringInProgress);
+
+                this.pathInProgress.attr ("stroke", tools.selectedColour.colourValue);
+
             }.bind(this),
 
             continuePath: function (paper, x, y) {
                 if(this.pathStringInProgress.length){
                     this.pathStringInProgress += "L" + x + "," + y;
-                    this.pathInProgress.remove();
-                    this.pathInProgress = paper.path(this.pathStringInProgress);
+                    this.pathInProgress.attr("path", this.pathStringInProgress);
+
                 }
             }.bind(this),
 
@@ -27,12 +31,14 @@ angular.module('myApp.services', [])
                 this.pathInProgress = undefined;
             }.bind(this)
         }
-    })
+    }])
+
+
     .factory('tools', function() {
         var defaults = {
             colours:[
-                {name: "Black", value: "#000"},
-                {name: "Blue", value: "#00F"}
+                {name: "Black", colourValue: "#000"},
+                {name: "Blue", colourValue: "#00F"}
             ]
         };
 
