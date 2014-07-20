@@ -20,10 +20,9 @@ angular.module('myApp.directives', [])
                     .attr("fill", "#FFF")
                     .attr("stroke", "#000");
 
-                drawing.backgroundElementId = background.id;
-
-                //path drawing events
-                background.drag(
+                //foreground for pen drawing
+                var drawingSurface = paper.rect(0, 0, w, h).attr("fill", "#000").attr("fill-opacity", 0).
+                    drag(
                     function onMove(dx, dy, x, y, e) {
                         switch (toolSelection.selectedTool.id) {
                             case "pen":
@@ -31,13 +30,13 @@ angular.module('myApp.directives', [])
                                 if ($(elements).find(e.target).length > 0) {
                                     pathDrawing.continuePath(e.offsetX, e.offsetY);
                                 } else {
-                                    pathDrawing.endPath();                                    
+                                    pathDrawing.endPath();
                                 }
                                 break;
                         }
                     }
                     ,
-                    function onStart(x, y, e) {                                                
+                    function onStart(x, y, e) {
                         switch(toolSelection.selectedTool.id) {
                             case "pen":
                                 pathDrawing.startPath(e.offsetX, e.offsetY);
@@ -48,11 +47,14 @@ angular.module('myApp.directives', [])
                         switch(toolSelection.selectedTool.id) {
                             case "pen":
                                 pathDrawing.endPath();
+                                drawingSurface.toFront();
                                 break;
                         }
                     }
                 );
 
+                drawing.backgroundElementId = background.id;
+                drawing.drawingSurfaceElementId = drawingSurface.id;
             }
         }
     }]);

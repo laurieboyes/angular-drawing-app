@@ -47,10 +47,11 @@ angular.module('myApp.services', [])
 
                 //save the background and all of its events
                 var backgroundElement = this.paper.getById(this.backgroundElementId);
+                var drawingSurfaceElement = this.paper.getById(this.drawingSurfaceElementId);
                 var toRemove = this.paper.set();
 
                 this.paper.forEach(function (el) {
-                    if (el !== backgroundElement) {
+                    if (el !== backgroundElement && el !== drawingSurfaceElement) {
                         toRemove.push(el);
                     }
                 });
@@ -60,7 +61,8 @@ angular.module('myApp.services', [])
 
             //set in the canvas directive
             paper: undefined,
-            backgroundElementId: undefined
+            backgroundElementId: undefined,
+            drawingSurfaceElementId: undefined
         }
     }])
 
