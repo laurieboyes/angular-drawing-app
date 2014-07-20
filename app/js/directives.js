@@ -23,7 +23,7 @@ angular.module('myApp.directives', [])
                 background.drag(
                     function onMove(dx, dy, x, y, e) {
 
-                        //bit of a nasty hack to ensure we're on the canvas
+                        //bit of a nasty hack to ensure we're still on the canvas
                         if ($(elements).find(e.target).length > 0) {
                             drawing.continuePath(paper, e.offsetX, e.offsetY);
                         } else {

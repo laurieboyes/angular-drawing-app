@@ -3,3 +3,9 @@ body {
     text-align: center;
 }
 
+.tools {
+    width: 600px;
+    margin: auto;
+    text-align: left;
+}
+
