@@ -3,18 +3,23 @@
 /* Controllers */
 
 angular.module('myApp.controllers', [])
-    .controller('ToolsController', ['tools', '$scope', function (tools, $scope) {
+    .controller('ToolsController', ['toolSelection', 'drawing', '$scope', function (toolSelection, drawing, $scope) {
 
 //        Colour
-
-        $scope.colours = tools.colours;
+        $scope.colours = toolSelection.colours;
 
         $scope.setSelectedColour = function() {
-            tools.selectedColour = $scope.selectedColour;
+            toolSelection.selectedColour = $scope.selectedColour;
         };
 
-        $scope.$watch( function () { return tools.selectedColour; }, function ( selectedColour ) {
+        $scope.$watch( function () { return toolSelection.selectedColour; }, function ( selectedColour ) {
             $scope.selectedColour = selectedColour;
         });
+
+
+//        Clear
+        $scope.clear = function() {
+            drawing.clear();
+        }
 
     }]);

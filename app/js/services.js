@@ -4,21 +4,21 @@
 
 angular.module('myApp.services', [])
 
-    .service('drawing', ['tools', function (tools) {
+    .service('pathDrawing', ['drawing', 'toolSelection', function (drawing, toolSelection) {
         return{
 
             pathStringInProgress: "",
             pathInProgress: undefined,
 
-            startPath: function (paper, x, y) {
+            startPath: function (x, y) {
                 this.pathStringInProgress = "M" + x + "," + y;
-                this.pathInProgress = paper.path(this.pathStringInProgress);
+                this.pathInProgress = drawing.paper.path(this.pathStringInProgress);
 
-                this.pathInProgress.attr ("stroke", tools.selectedColour.colourValue);
+                this.pathInProgress.attr ("stroke", toolSelection.selectedColour.colourValue);
 
             }.bind(this),
 
-            continuePath: function (paper, x, y) {
+            continuePath: function (x, y) {
                 if(this.pathStringInProgress.length){
                     this.pathStringInProgress += "L" + x + "," + y;
                     this.pathInProgress.attr("path", this.pathStringInProgress);
@@ -33,8 +33,28 @@ angular.module('myApp.services', [])
         }
     }])
 
+    .service('drawing', [function () {
+        return{
+            clear: function () {
 
-    .factory('tools', function() {
+                var toRemove = [];
+
+                this.paper.forEach(function (el) {
+                    if(el.id !== this.backgroundElementId){
+                        toRemove.push(el);
+                    }
+                }.bind(this));
+
+            },
+
+            //set in the canvas directive
+            paper: undefined,
+            backgroundElementId: undefined
+        }
+    }])
+
+
+    .factory('toolSelection', function() {
         var defaults = {
             colours:[
                 {name: "Black", colourValue: "#000"},

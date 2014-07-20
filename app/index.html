@@ -25,6 +25,7 @@
 
   <div class="tools" ng-controller="ToolsController">
       <select ng-model="selectedColour" ng-options="colour.name for colour in colours" ng-change="setSelectedColour()"></select>
+      <input type="button" ng-click="clear()" value="Clear screen"/>
   </div>
 
   <!-- In production use:
