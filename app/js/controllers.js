@@ -3,24 +3,24 @@
 /* Controllers */
 
 angular.module('myApp.controllers', [])
-    .controller('ColourController', ['toolSelection', 'drawing', '$scope', function (toolSelection, drawing, $scope) {
+    .controller('ColourController', ['controlsState', 'drawing', '$scope', function (controlsState, drawing, $scope) {
         
-        $scope.colours = toolSelection.colours;
+        $scope.colours = controlsState.colours;
 
         $scope.setSelectedColour = function() {
-            toolSelection.selectedColour = $scope.selectedColour;
+            controlsState.selectedColour = $scope.selectedColour;
         };
 
-        $scope.$watch( function () { return toolSelection.selectedColour; }, function ( selectedColour ) {
+        $scope.$watch( function () { return controlsState.selectedColour; }, function ( selectedColour ) {
             $scope.selectedColour = selectedColour;
         });
     }])
 
-    .controller('ToolsController', ['toolSelection', 'drawing', '$scope', function (toolSelection, drawing, $scope) {
-        $scope.tools = toolSelection.tools;
+    .controller('ToolsController', ['controlsState', 'drawing', '$scope', function (controlsState, drawing, $scope) {
+        $scope.tools = controlsState.tools;
 
         $scope.setSelectedTool = function() {
-            toolSelection.selectedTool = $scope.selectedTool;
+            controlsState.selectedTool = $scope.selectedTool;
             
 //            Not sure this belongs here
             if($scope.selectedTool.id === "pen") {
@@ -30,19 +30,19 @@ angular.module('myApp.controllers', [])
             }
         };
 
-        $scope.$watch( function () { return toolSelection.selectedTool; }, function ( selectedTool ) {           
+        $scope.$watch( function () { return controlsState.selectedTool; }, function ( selectedTool ) {           
             $scope.selectedTool = selectedTool;
         });
     }])
 
-    .controller('SizeController', ['toolSelection', '$scope', function (toolSelection, $scope) {
-        $scope.sizes = toolSelection.sizes;
+    .controller('SizeController', ['controlsState', '$scope', function (controlsState, $scope) {
+        $scope.sizes = controlsState.sizes;
 
         $scope.setSelectedSize = function() {
-            toolSelection.selectedSize = $scope.selectedSize;
+            controlsState.selectedSize = $scope.selectedSize;
         };
 
-        $scope.$watch( function () { return toolSelection.selectedSize; }, function ( selectedSize ) {
+        $scope.$watch( function () { return controlsState.selectedSize; }, function ( selectedSize ) {
             $scope.selectedSize = selectedSize;
         });
     }])

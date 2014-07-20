@@ -23,7 +23,7 @@
 
   <div class="canvas" canvas canvas-width="600" canvas-height="400"></div>
 
-  <div class="tools">
+  <div class="controls">
       <select ng-controller="ColourController" ng-model="selectedColour" ng-options="colour.name for colour in colours" ng-change="setSelectedColour()"></select>
       <select ng-controller="ToolsController" ng-model="selectedTool" ng-options="tool.name for tool in tools" ng-change="setSelectedTool()"></select>
       <select ng-controller="SizeController" ng-model="selectedSize" ng-options="size.name for size in sizes" ng-change="setSelectedSize()"></select>

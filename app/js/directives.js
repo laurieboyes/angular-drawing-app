@@ -4,7 +4,7 @@
 
 angular.module('myApp.directives', [])
 
-    .directive('canvas', ['drawing','pathDrawing','toolSelection', function (drawing, pathDrawing, toolSelection) {
+    .directive('canvas', ['drawing','pathDrawing','controlsState', function (drawing, pathDrawing, controlsState) {
         return {
             restrict: 'A',
             link: function (scope, elements, attrs) {
@@ -24,7 +24,7 @@ angular.module('myApp.directives', [])
                 var drawingSurface = paper.rect(0, 0, w, h).attr("fill", "#000").attr("fill-opacity", 0).
                     drag(
                     function onMove(dx, dy, x, y, e) {
-                        switch (toolSelection.selectedTool.id) {
+                        switch (controlsState.selectedTool.id) {
                             case "pen":
                                 //bit of a nasty hack to ensure we're still on the canvas
                                 if ($(elements).find(e.target).length > 0) {
@@ -37,14 +37,14 @@ angular.module('myApp.directives', [])
                     }
                     ,
                     function onStart(x, y, e) {
-                        switch(toolSelection.selectedTool.id) {
+                        switch(controlsState.selectedTool.id) {
                             case "pen":
                                 pathDrawing.startPath(e.offsetX, e.offsetY);
                                 break;
                         }
                     },
                     function onEnd() {
-                        switch(toolSelection.selectedTool.id) {
+                        switch(controlsState.selectedTool.id) {
                             case "pen":
                                 pathDrawing.endPath();
                                 drawingSurface.toFront();

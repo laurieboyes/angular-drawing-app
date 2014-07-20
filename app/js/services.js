@@ -4,7 +4,7 @@
 
 angular.module('myApp.services', [])
 
-    .service('pathDrawing', ['drawing', 'toolSelection', 'shapeEvents', function (drawing, toolSelection, shapeEvents) {
+    .service('pathDrawing', ['drawing', 'controlsState', 'shapeEvents', function (drawing, controlsState, shapeEvents) {
         return{
 
             pathStringInProgress: "",
@@ -16,8 +16,8 @@ angular.module('myApp.services', [])
 
                 this.pathInProgress.attr(
                     {
-                        "stroke": toolSelection.selectedColour.colourValue,
-                        "stroke-width": toolSelection.selectedSize.sizeValue
+                        "stroke": controlsState.selectedColour.colourValue,
+                        "stroke-width": controlsState.selectedSize.sizeValue
                     }
                 );
                 
@@ -74,7 +74,7 @@ angular.module('myApp.services', [])
         }
     }])
 
-    .service('shapeEvents', ['toolSelection', function (toolSelection) {
+    .service('shapeEvents', ['controlsState', function (controlsState) {
         return{
             addEvents: function (raphaelEl) {
                 this.addEraseEvent(raphaelEl);
@@ -82,14 +82,14 @@ angular.module('myApp.services', [])
 
             addEraseEvent: function (raphaelEl) {
                 raphaelEl.click(function (e) {
-                    if (toolSelection.selectedTool.id === "eraser") {
+                    if (controlsState.selectedTool.id === "eraser") {
                         raphaelEl.remove();
                     }
 
                 });
                 raphaelEl.mouseover(function (e) {
                     var isLeftButtonPressed = e.which === 1;
-                    if (isLeftButtonPressed && toolSelection.selectedTool.id === "eraser") {
+                    if (isLeftButtonPressed && controlsState.selectedTool.id === "eraser") {
                         raphaelEl.remove();
                     }
 
@@ -99,7 +99,7 @@ angular.module('myApp.services', [])
     }])
 
 //    Todo rename me
-    .factory('toolSelection', function () {
+    .factory('controlsState', function () {
         var defaults = {
             colours: [
                 {name: "Black", colourValue: "#000"},
