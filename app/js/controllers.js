@@ -6,23 +6,23 @@ angular.module('myApp.controllers', [])
     
 //    todo look into nesting controllers?
     
-    .controller('ControlsController', ['controlsState', 'drawing', '$scope', function (controlsState, drawing, $scope) {
+    .controller('ControlsController', ['toolState', 'drawing', '$scope', function (toolState, drawing, $scope) {
 
         // Colours
         
-        $scope.colours = controlsState.colours;
+        $scope.colours = toolState.colours;
         $scope.setSelectedColour = function() {
-            controlsState.selectedColour = $scope.selectedColour;
+            toolState.selectedColour = $scope.selectedColour;
         };
-        $scope.$watch( function () { return controlsState.selectedColour; }, function ( selectedColour ) {
+        $scope.$watch( function () { return toolState.selectedColour; }, function ( selectedColour ) {
             $scope.selectedColour = selectedColour;
         });
         
         
         // Tools
-        $scope.tools = controlsState.tools;
+        $scope.tools = toolState.tools;
         $scope.setSelectedTool = function() {
-            controlsState.selectedTool = $scope.selectedTool;
+            toolState.selectedTool = $scope.selectedTool;
 
             if ($scope.selectedTool.id === "pen") {
                 drawing.enablePathDrawing();
@@ -30,17 +30,17 @@ angular.module('myApp.controllers', [])
                 drawing.disablePathDrawing();
             }
         };
-        $scope.$watch( function () { return controlsState.selectedTool; }, function ( selectedTool ) {
+        $scope.$watch( function () { return toolState.selectedTool; }, function ( selectedTool ) {
             $scope.selectedTool = selectedTool;
         });
 
 //        Pen Size
         
-        $scope.sizes = controlsState.sizes;
+        $scope.sizes = toolState.sizes;
         $scope.setSelectedSize = function() {
-            controlsState.selectedSize = $scope.selectedSize;
+            toolState.selectedSize = $scope.selectedSize;
         };
-        $scope.$watch( function () { return controlsState.selectedSize; }, function ( selectedSize ) {
+        $scope.$watch( function () { return toolState.selectedSize; }, function ( selectedSize ) {
             $scope.selectedSize = selectedSize;
         })
     }])

@@ -4,7 +4,7 @@
 
 angular.module('myApp.services', [])
 
-    .service('pathDrawing', ['drawing', 'controlsState', 'shapeEvents', function (drawing, controlsState, shapeEvents) {
+    .service('pathDrawing', ['drawing', 'toolState', 'shapeEvents', function (drawing, toolState, shapeEvents) {
         return{
 
             pathStringInProgress: "",
@@ -19,8 +19,8 @@ angular.module('myApp.services', [])
                 
                 this.pathInProgress.attr(
                     {
-                        "stroke": controlsState.selectedColour.colourValue,
-                        "stroke-width": controlsState.selectedSize.sizeValue
+                        "stroke": toolState.selectedColour.colourValue,
+                        "stroke-width": toolState.selectedSize.sizeValue
                     }
                 );
                 
@@ -77,7 +77,7 @@ angular.module('myApp.services', [])
         }
     }])
 
-    .service('shapeEvents', ['controlsState', function (controlsState) {
+    .service('shapeEvents', ['toolState', function (toolState) {
         return{
             addEvents: function (raphaelEl) {
                 this.addEraseEvent(raphaelEl);
@@ -85,14 +85,14 @@ angular.module('myApp.services', [])
 
             addEraseEvent: function (raphaelEl) {
                 raphaelEl.click(function (e) {
-                    if (controlsState.selectedTool.id === "eraser") {
+                    if (toolState.selectedTool.id === "eraser") {
                         raphaelEl.remove();
                     }
 
                 });
                 raphaelEl.mouseover(function (e) {
                     var isLeftButtonPressed = e.which === 1;
-                    if (isLeftButtonPressed && controlsState.selectedTool.id === "eraser") {
+                    if (isLeftButtonPressed && toolState.selectedTool.id === "eraser") {
                         raphaelEl.remove();
                     }
 
@@ -101,8 +101,7 @@ angular.module('myApp.services', [])
         }
     }])
 
-//    Todo rename me
-    .factory('controlsState', function () {
+    .factory('toolState', function () {
         var defaults = {
             colours: [
                 {name: "Black", colourValue: "#000"},

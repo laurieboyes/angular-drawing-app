@@ -4,7 +4,7 @@
 
 angular.module('myApp.directives', [])
 
-    .directive('canvas', ['drawing','pathDrawing','controlsState', function (drawing, pathDrawing, controlsState) {
+    .directive('canvas', ['drawing','pathDrawing','toolState', function (drawing, pathDrawing, toolState) {
         return {
             restrict: 'A',
             link: function (scope, elements, attrs) {
@@ -35,7 +35,7 @@ angular.module('myApp.directives', [])
                     .attr("fill-opacity", 0)
                     .drag(
                     function onMove(dx, dy, x, y, e) {
-                        switch (controlsState.selectedTool.id) {
+                        switch (toolState.selectedTool.id) {
                             case "pen":                                            
                                 //keep within the bounds of the drawing surface
                                 if (e.target == drawingSurface.node) {                                    
@@ -48,14 +48,14 @@ angular.module('myApp.directives', [])
                     }
                     ,
                     function onStart(x, y, e) {
-                        switch(controlsState.selectedTool.id) {
+                        switch(toolState.selectedTool.id) {
                             case "pen":
                                 pathDrawing.startPath(e.offsetX, e.offsetY);
                                 break;
                         }
                     },
                     function onEnd() {
-                        switch(controlsState.selectedTool.id) {
+                        switch(toolState.selectedTool.id) {
                             case "pen":
                                 pathDrawing.endPath();
                                 drawingSurface.toFront();
