@@ -108,7 +108,8 @@ angular.module('myApp.services', [])
                 {name: "Black", colourValue: "#000"},
                 {name: "Red", colourValue: "#F00"},
                 {name: "Green", colourValue: "#0F0"},
-                {name: "Blue", colourValue: "#00F"}
+                {name: "Blue", colourValue: "#00F"},
+                {name: "White", colourValue: "#FFF"}
             ],
             tools: [
                 {name: "Pen", id: "pen"},
