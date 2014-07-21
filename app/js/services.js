@@ -69,8 +69,8 @@ angular.module('myApp.services', [])
 
             continueEllipse: function (x, y) {
                 if (this.ellipseInProgress !== undefined) {
-                    this.ellipseInProgress.attr("rx", 50);
-                    this.ellipseInProgress.attr("ry", 50);
+                    this.ellipseInProgress.attr("rx", Math.abs(x - this.origin.x));
+                    this.ellipseInProgress.attr("ry", Math.abs(y - this.origin.y));
 
                 }
             }.bind(this),
