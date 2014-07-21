@@ -71,7 +71,6 @@ angular.module('myApp.services', [])
                 if (this.ellipseInProgress !== undefined) {
                     this.ellipseInProgress.attr("rx", Math.abs(x - this.origin.x));
                     this.ellipseInProgress.attr("ry", Math.abs(y - this.origin.y));
-
                 }
             }.bind(this),
 
@@ -150,7 +149,7 @@ angular.module('myApp.services', [])
             tools: [
                 {name: "Pen", id: "pen"},
                 {name: "Ellipse", id: "ellipse"},
-                {name: "Line Eraser", id: "eraser"}
+                {name: "Shape Eraser", id: "eraser"}
             ],
             sizes: [
                 {name: "Small", sizeValue: 3},
