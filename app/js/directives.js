@@ -16,18 +16,29 @@ angular.module('myApp.directives', [])
                 var paper = drawing.paper;
 
                 //background
-                var background = paper.rect(0, 0, w, h)
-                    .attr("fill", "#FFF")
+                
+                var background = paper.rect(0, 0, w, h);
+                drawing.backgroundElementId = background.id;
+                
+                background.attr("fill", "#FFF")
                     .attr("stroke", "#000");
+                
+                
 
                 //foreground for pen drawing
-                var drawingSurface = paper.rect(0, 0, w, h).attr("fill", "#000").attr("fill-opacity", 0).
-                    drag(
+                
+                var drawingSurface = paper.rect(0, 0, w, h);                
+                drawing.drawingSurfaceElementId = drawingSurface.id;
+                
+                drawingSurface
+                    .attr("fill", "#000")
+                    .attr("fill-opacity", 0)
+                    .drag(
                     function onMove(dx, dy, x, y, e) {
                         switch (controlsState.selectedTool.id) {
-                            case "pen":
-                                //bit of a nasty hack to ensure we're still on the canvas
-                                if ($(elements).find(e.target).length > 0) {
+                            case "pen":                                            
+                                //keep within the bounds of the drawing surface
+                                if (e.target == drawingSurface.node) {                                    
                                     pathDrawing.continuePath(e.offsetX, e.offsetY);
                                 } else {
                                     pathDrawing.endPath();
@@ -52,9 +63,7 @@ angular.module('myApp.directives', [])
                         }
                     }
                 );
-
-                drawing.backgroundElementId = background.id;
-                drawing.drawingSurfaceElementId = drawingSurface.id;
+                
             }
         }
     }]);

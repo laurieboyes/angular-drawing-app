@@ -14,6 +14,9 @@ angular.module('myApp.services', [])
                 this.pathStringInProgress = "M" + x + "," + y;
                 this.pathInProgress = drawing.paper.path(this.pathStringInProgress);
 
+                //Ensure we still draw onto the drawing surface
+                drawing.paper.getById(drawing.drawingSurfaceElementId).toFront();
+                
                 this.pathInProgress.attr(
                     {
                         "stroke": controlsState.selectedColour.colourValue,
