@@ -4,7 +4,7 @@
 
 angular.module('myApp.directives', [])
 
-    .directive('canvas', ['drawing','pathDrawing', 'ellipseDrawing', 'toolState', function (drawing, pathDrawing, ellipseDrawing, toolState) {
+    .directive('canvas', ['drawing','pathTool', 'ellipseTool', 'toolState', function (drawing, pathTool, ellipseTool, toolState) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
@@ -35,61 +35,50 @@ angular.module('myApp.directives', [])
                     .attr("fill-opacity", 0)
                     .drag(
                     function onMove(dx, dy, x, y, e) {
-                        switch (toolState.selectedTool.id) {
-                            case "pen":                                            
-                                //keep within the bounds of the drawing surface
-                                if (e.target == drawingSurface.node) {
-                  
-                                    mouseEventPolyfillOffset(e, element);
-                                    
-                                    pathDrawing.continuePath(e.layerX, e.layerY);
-                                } else {
-                                    pathDrawing.endPath();
-                                }
-                                break;
-                            case "ellipse":
-                                //keep within the bounds of the drawing surface
-                                if (e.target == drawingSurface.node) {
-
-                                    mouseEventPolyfillOffset(e, element);
-
-                                    ellipseDrawing.continueEllipse(e.layerX, e.layerY);
-                                } else {
-                                    ellipseDrawing.endEllipse();
-                                }
-                                break;
-                        }
+                        var drawingTool;
+                        if(drawing.drawMode){                           
+                            drawingTool = getDrawingTool(toolState.selectedTool.id);
+                            
+                            //keep within the bounds of the drawing surface
+                            if (e.target == drawingSurface.node) {
+                                mouseEventPolyfillOffset(e, element);
+                                drawingTool.continueShape(e.layerX, e.layerY);
+                            } else {
+                                drawingTool.endShape();
+                            }
+                        }                       
                     }
                     ,
                     function onStart(x, y, e) {
-                        switch(toolState.selectedTool.id) {
-                            case "pen":
-
+                        var drawingTool;
+                        if (drawing.drawMode) {
+                            //keep within the bounds of the drawing surface
+                            if (e.target == drawingSurface.node) {
+                                drawingTool = getDrawingTool(toolState.selectedTool.id);
                                 mouseEventPolyfillOffset(e, element);
-                                
-                                pathDrawing.startPath(e.layerX, e.layerY);
-                                break;
-                            case "ellipse":
-
-                                mouseEventPolyfillOffset(e, element);
-
-                                ellipseDrawing.startEllipse(e.layerX, e.layerY);
-                                break;
+                                drawingTool.startShape(e.layerX, e.layerY);
+                            }
                         }
                     },
                     function onEnd() {
-                        switch(toolState.selectedTool.id) {
-                            case "pen":
-                                pathDrawing.endPath();
-                                drawingSurface.toFront();
-                                break;
-                            case "ellipse":
-                                ellipseDrawing.endEllipse();
-                                drawingSurface.toFront();
-                                break;
-                        }
+
+                        var drawingTool;
+                        if (drawing.drawMode) {
+                            drawingTool = getDrawingTool(toolState.selectedTool.id);
+                            drawingTool.endShape();
+                            drawingSurface.toFront();
+                        }                       
                     }
                 );
+                
+                var getDrawingTool = function(toolId){
+                    switch (toolId) {
+                        case "pen":
+                            return pathTool;
+                        case "ellipse":
+                            return ellipseTool;
+                    }
+                };
 
                 //For reasons I don't currently understand, this polyfill does not produce the desired effect if
                 //its declaration is tidied away into the drawing service

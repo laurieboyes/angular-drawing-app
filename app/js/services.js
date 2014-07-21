@@ -4,13 +4,13 @@
 
 angular.module('myApp.services', [])
 
-    .service('pathDrawing', ['drawing', 'toolState', 'shapeEvents', function (drawing, toolState, shapeEvents) {
+    .service('pathTool', ['drawing', 'toolState', 'shapeEvents', function (drawing, toolState, shapeEvents) {
         return{
 
             pathStringInProgress: "",
             pathInProgress: undefined,
 
-            startPath: function (x, y) {
+            startShape: function (x, y) {
                 this.pathStringInProgress = "M" + x + "," + y;
                 this.pathInProgress = drawing.paper.path(this.pathStringInProgress);
 
@@ -28,7 +28,7 @@ angular.module('myApp.services', [])
 
             }.bind(this),
 
-            continuePath: function (x, y) {
+            continueShape: function (x, y) {
                 if (this.pathStringInProgress.length) {
                     this.pathStringInProgress += "L" + x + "," + y;
                     this.pathInProgress.attr("path", this.pathStringInProgress);
@@ -36,20 +36,20 @@ angular.module('myApp.services', [])
                 }
             }.bind(this),
 
-            endPath: function () {
+            endShape: function () {
                 this.pathStringInProgress = "";
                 this.pathInProgress = undefined;
             }.bind(this)
         }
     }])
 
-    .service('ellipseDrawing', ['drawing', 'toolState', 'shapeEvents', function (drawing, toolState, shapeEvents) {
+    .service('ellipseTool', ['drawing', 'toolState', 'shapeEvents', function (drawing, toolState, shapeEvents) {
         return{
 
             ellipseInProgress: undefined,
             origin: undefined,
 
-            startEllipse: function (x, y) {
+            startShape: function (x, y) {
                 this.origin = {"x": x, "y": y};
                 this.ellipseInProgress = drawing.paper.ellipse(this.origin.x,this.origin.y, 0, 0);
 
@@ -67,14 +67,14 @@ angular.module('myApp.services', [])
 
             }.bind(this),
 
-            continueEllipse: function (x, y) {
+            continueShape: function (x, y) {
                 if (this.ellipseInProgress !== undefined) {
                     this.ellipseInProgress.attr("rx", Math.abs(x - this.origin.x));
                     this.ellipseInProgress.attr("ry", Math.abs(y - this.origin.y));
                 }
             }.bind(this),
 
-            endEllipse: function () {
+            endShape: function () {
                 this.ellipseInProgress = undefined;
             }.bind(this)
         }
@@ -100,13 +100,16 @@ angular.module('myApp.services', [])
 
             enablePathDrawing: function () {
                 this.drawingSurfaceElement.toFront();
+                this.drawMode = true;
             },
             
             disablePathDrawing: function () {
                 this.drawingSurfaceElement.toBack();
+                this.drawMode = false;
             },
 
             //set in the canvas directive
+            drawMode: true,
             paper: undefined,
             backgroundElement: undefined,
             drawingSurfaceElement: undefined
