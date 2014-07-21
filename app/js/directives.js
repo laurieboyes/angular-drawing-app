@@ -4,7 +4,7 @@
 
 angular.module('myApp.directives', [])
 
-    .directive('canvas', ['drawing','pathDrawing','toolState', function (drawing, pathDrawing, toolState) {
+    .directive('canvas', ['drawing','pathDrawing', 'ellipseDrawing', 'toolState', function (drawing, pathDrawing, ellipseDrawing, toolState) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
@@ -47,6 +47,17 @@ angular.module('myApp.directives', [])
                                     pathDrawing.endPath();
                                 }
                                 break;
+                            case "ellipse":
+                                //keep within the bounds of the drawing surface
+                                if (e.target == drawingSurface.node) {
+
+                                    mouseEventPolyfillOffset(e, element);
+
+                                    ellipseDrawing.continueEllipse(e.layerX, e.layerY);
+                                } else {
+                                    ellipseDrawing.endEllipse();
+                                }
+                                break;
                         }
                     }
                     ,
@@ -58,12 +69,22 @@ angular.module('myApp.directives', [])
                                 
                                 pathDrawing.startPath(e.layerX, e.layerY);
                                 break;
+                            case "ellipse":
+
+                                mouseEventPolyfillOffset(e, element);
+
+                                ellipseDrawing.startEllipse(e.layerX, e.layerY);
+                                break;
                         }
                     },
                     function onEnd() {
                         switch(toolState.selectedTool.id) {
                             case "pen":
                                 pathDrawing.endPath();
+                                drawingSurface.toFront();
+                                break;
+                            case "ellipse":
+                                ellipseDrawing.endEllipse();
                                 drawingSurface.toFront();
                                 break;
                         }

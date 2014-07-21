@@ -34,13 +34,13 @@
               ng-model="selectedColour"
               ng-options="colour.name for colour in colours"
               ng-change="setSelectedColour()"
-              class="show-if-tool-is-pen {{selectedTool.id}}"></select>
+              class="show-if pen ellipse {{selectedTool.id}}-selected"></select>
       
       <select ng-controller="SizeController"                
               ng-model="selectedSize" 
               ng-options="size.name for size in sizes" 
               ng-change="setSelectedSize()"
-              class="show-if-tool-is-pen {{selectedTool.id}}"></select>
+              class="show-if pen ellipse {{selectedTool.id}}-selected"></select>
       
       <input ng-controller="ClearController" type="button" ng-click="clear()" value="Clear screen"/>
       

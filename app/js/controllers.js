@@ -31,7 +31,7 @@ angular.module('myApp.controllers', [])
         $scope.setSelectedTool = function() {
             toolState.selectedTool = $scope.selectedTool;
 
-            if ($scope.selectedTool.id === "pen") {
+            if ($scope.selectedTool.id === "pen" || $scope.selectedTool.id === "ellipse") {
                 drawing.enablePathDrawing();
             } else {
                 drawing.disablePathDrawing();

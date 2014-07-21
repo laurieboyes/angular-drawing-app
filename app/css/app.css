@@ -9,10 +9,15 @@ body {
     text-align: left;
 }
 
-.show-if-tool-is-pen {
+.show-if {
     display: none;
 }
-.show-if-tool-is-pen.pen {
+
+.show-if.pen.pen-selected {
+    display: inline;
+}
+
+.show-if.ellipse.ellipse-selected {
     display: inline;
 }
 

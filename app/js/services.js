@@ -24,7 +24,6 @@ angular.module('myApp.services', [])
                     }
                 );
                 
-                
                 shapeEvents.addEvents(this.pathInProgress);
 
             }.bind(this),
@@ -40,6 +39,44 @@ angular.module('myApp.services', [])
             endPath: function () {
                 this.pathStringInProgress = "";
                 this.pathInProgress = undefined;
+            }.bind(this)
+        }
+    }])
+
+    .service('ellipseDrawing', ['drawing', 'toolState', 'shapeEvents', function (drawing, toolState, shapeEvents) {
+        return{
+
+            ellipseInProgress: undefined,
+            origin: undefined,
+
+            startEllipse: function (x, y) {
+                this.origin = {"x": x, "y": y};
+                this.ellipseInProgress = drawing.paper.ellipse(this.origin.x,this.origin.y, 0, 0);
+
+                //Ensure we still draw onto the drawing surface
+                drawing.drawingSurfaceElement.toFront();
+
+                this.ellipseInProgress.attr(
+                    {
+                        "stroke": toolState.selectedColour.colourValue,
+                        "stroke-width": toolState.selectedSize.sizeValue
+                    }
+                );
+
+                shapeEvents.addEvents(this.ellipseInProgress);
+
+            }.bind(this),
+
+            continueEllipse: function (x, y) {
+                if (this.ellipseInProgress !== undefined) {
+                    this.ellipseInProgress.attr("rx", 50);
+                    this.ellipseInProgress.attr("ry", 50);
+
+                }
+            }.bind(this),
+
+            endEllipse: function () {
+                this.ellipseInProgress = undefined;
             }.bind(this)
         }
     }])
@@ -112,6 +149,7 @@ angular.module('myApp.services', [])
             ],
             tools: [
                 {name: "Pen", id: "pen"},
+                {name: "Ellipse", id: "ellipse"},
                 {name: "Line Eraser", id: "eraser"}
             ],
             sizes: [
