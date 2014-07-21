@@ -18,8 +18,7 @@ angular.module('myApp.controllers', [])
             $scope.selectedTool = selectedTool;
         });
 
-//        Pen Size
-        
+//        Pen Size        
         $scope.sizes = toolState.sizes;
         $scope.$watch( function () { return toolState.selectedSize; }, function ( selectedSize ) {
             $scope.selectedSize = selectedSize;

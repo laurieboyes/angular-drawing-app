@@ -21,8 +21,7 @@ angular.module('myApp.directives', [])
                 drawing.backgroundElement = background;
                 
                 background.attr("fill", "#FFF")
-                    .attr("stroke", "#000");
-                
+                    .attr("stroke", "#000");                
                 
 
                 //foreground for pen drawing
