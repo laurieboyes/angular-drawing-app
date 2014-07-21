@@ -18,7 +18,7 @@ angular.module('myApp.directives', [])
                 //background
                 
                 var background = paper.rect(0, 0, w, h);
-                drawing.backgroundElementId = background.id;
+                drawing.backgroundElement = background;
                 
                 background.attr("fill", "#FFF")
                     .attr("stroke", "#000");
@@ -28,7 +28,7 @@ angular.module('myApp.directives', [])
                 //foreground for pen drawing
                 
                 var drawingSurface = paper.rect(0, 0, w, h);                
-                drawing.drawingSurfaceElementId = drawingSurface.id;
+                drawing.drawingSurfaceElement = drawingSurface;
                 
                 drawingSurface
                     .attr("fill", "#000")

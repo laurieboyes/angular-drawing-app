@@ -15,7 +15,7 @@ angular.module('myApp.services', [])
                 this.pathInProgress = drawing.paper.path(this.pathStringInProgress);
 
                 //Ensure we still draw onto the drawing surface
-                drawing.paper.getById(drawing.drawingSurfaceElementId).toFront();
+                drawing.drawingSurfaceElement.toFront();
                 
                 this.pathInProgress.attr(
                     {
@@ -48,9 +48,9 @@ angular.module('myApp.services', [])
         return{
             clear: function () {
 
-                //save the background and all of its events
-                var backgroundElement = this.paper.getById(this.backgroundElementId);
-                var drawingSurfaceElement = this.paper.getById(this.drawingSurfaceElementId);
+                //save the background and the drawing surface
+                var backgroundElement = this.backgroundElement;
+                var drawingSurfaceElement = this.drawingSurfaceElement;
                 var toRemove = this.paper.set();
 
                 this.paper.forEach(function (el) {
@@ -63,17 +63,17 @@ angular.module('myApp.services', [])
             },
 
             enablePathDrawing: function () {
-                this.paper.getById(this.drawingSurfaceElementId).toFront();
+                this.drawingSurfaceElement.toFront();
             },
             
             disablePathDrawing: function () {
-                this.paper.getById(this.drawingSurfaceElementId).toBack();
+                this.drawingSurfaceElement.toBack();
             },
 
             //set in the canvas directive
             paper: undefined,
-            backgroundElementId: undefined,
-            drawingSurfaceElementId: undefined
+            backgroundElement: undefined,
+            drawingSurfaceElement: undefined
         }
     }])
 
